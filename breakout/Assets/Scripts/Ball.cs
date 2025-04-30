@@ -7,6 +7,7 @@ public class Ball : MonoBehaviour
     [SerializeField] private float velocityMultiplier = 1.1f;
     private Rigidbody2D rb;
     private bool isMoving = false; //Para evitar que se mueva antes de que la lance el jugador
+    private Vector2 startPosition;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,6 +37,7 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.CompareTag("block")) {
             Destroy(collision.gameObject);
             rb.linearVelocity *= velocityMultiplier; //Aumentamos la velocidad de la bola cada vez que destruye un bloque
+            GameManager.Instance.LoadNextLevel();
         }
         VelocityFix(); //Soluciona un posible rebote horizontal o vertical eterno
     }
@@ -67,4 +69,11 @@ public class Ball : MonoBehaviour
         }
     }
 
+    public void ResetBall()
+    {
+        isMoving = false;
+        rb.linearVelocity= Vector3.zero;
+        transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
+        transform.position = startPosition;
+    }
 }
