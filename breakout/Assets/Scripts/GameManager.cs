@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     private int blocks;
 
     private void Awake()
+
     {
         //Patron singleton
 
